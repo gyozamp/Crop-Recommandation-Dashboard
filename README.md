@@ -25,10 +25,12 @@ src/
 ```
 # Runnid the Projecy
 1. **Clone or fork** this repo
+   
 2. **Install root dependencies**
    ```text
      npm install
    ```
+
 3. **Stard dev**
    ```text
      npm run dev
