@@ -33,7 +33,7 @@ src/
 ├─ App.tsx
 └─ main.tsx
 ```
-# Runnid the Projecy
+# Running the Project
 1. **Clone or fork** this repo
    
 2. **Install root dependencies**
