@@ -1,73 +1,53 @@
-# React + TypeScript + Vite
+# 🌱 - Crop Recommandion Dashboard
+Questo progetto è una **dashboard interattiva** sviluppata in **React** per esplorare e visualizzare i dati del **Crop Recommendation Dataset**, un dataset proveniente da Kaggle utilizzato per analizzare le caratteristiche del suolo e identificare la coltura più adatta in base ai parametri ambientali.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+L’obiettivo della dashboard è fornire uno strumento semplice, pulito e intuitivo per:
+- Analizzare le variabili agronomiche (N, P, K, pH, temperatura, umidità, pioggia);
+- Comprendere la distribuzione delle colture;
+- Filtrare rapidamente i dati;
+- Visualizzare dati e relazioni tramite grafici e tabelle interattive.
 
-Currently, two official plugins are available:
+# Tech Stack
+- TypeScript
+- React
+- Tailwind - Tailwind for React
+- Vite
+- Heroicons
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Project Structure
+```text
+src/
+├─ components/
+│  └─ Card/
+│  └─ Chart/
+│  └─ FilterSelect/
+│  └─ Footer/
+│  └─ Navbar/
+│  └─ Sidebar/
+├─ data/
+│  └─ Crop_Recommandation.csv
+├─ layout/
+├─ pages/
+├─ router/
+├─ service/
+├─ App.tsx
+└─ main.tsx
 ```
+# Running the Project
+1. **Clone or fork** this repo
+   
+2. **Install root dependencies**
+   ```text
+     npm install
+   ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+3. **Stard dev**
+   ```text
+     npm run dev
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# Running (after setup)
+Go back to the root folder and run the following command:
+  ```text
+     npm run dev
+   ```
