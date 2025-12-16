@@ -52,6 +52,3 @@ Go back to the root folder and run the following command:
      npm run dev
    ```
 
-
-
-<!-- il tuo commento qui -->
