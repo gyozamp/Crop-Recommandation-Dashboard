@@ -1,8 +1,11 @@
-// src/pages/Dashboard.tsx
-
 import React, { useState, useMemo } from "react";
-import Card from "../components/Card/Card";
+
 import FilterSelect from "../components/FilterSelect/FilterSelect";
+
+//import Card from "../components/Card/Card";
+import ChartCard from "../components/Chart/ChartCard";
+import KpiGrid from "../components/Card/KpiGrid";
+
 
 // Chart.js e componenti di Chart.js
 import {
@@ -87,41 +90,45 @@ export default function Dashboard() {
     [avgData, selectedCrop]
   );
 
+  // Qui definiamo le KPI da passare al componente KpiGrid
+  const kpiItems = [
+    {
+      title: "Campioni totali",
+      value: totalCrops,
+      icon: <CircleStackIcon />,
+      color: "emerald" as const,
+    },
+    {
+      title: "Colture uniche",
+      value: uniqueCrops,
+      icon: <TagIcon />,
+      color: "indigo" as const,
+    },
+    {
+      title: "Temp. media (°C)",
+      value: avgTemperature,
+      icon: <SunIcon />,
+      color: "orange" as const,
+    },
+    {
+      title: "pH medio",
+      value: avgPH,
+      icon: <BeakerIcon />,
+      color: "purple" as const,
+    },
+    {
+      title: "Pioggia media (mm)",
+      value: avgRain,
+      icon: <CloudIcon />,
+      color: "blue" as const,
+    },
+  ];
+
   return (
     <>
       {/* 1. KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-5 mb-8">
-        <Card
-          title="Campioni totali"
-          value={totalCrops}
-          icon={<CircleStackIcon />}
-          color="emerald"
-        />
-        <Card
-          title="Colture uniche"
-          value={uniqueCrops}
-          icon={<TagIcon />}
-          color="indigo"
-        />
-        <Card
-          title="Temp. media (°C)"
-          value={avgTemperature}
-          icon={<SunIcon />}
-          color="orange"
-        />
-        <Card
-          title="pH medio"
-          value={avgPH}
-          icon={<BeakerIcon />}
-          color="purple"
-        />
-        <Card
-          title="Pioggia media (mm)"
-          value={avgRain}
-          icon={<CloudIcon />}
-          color="blue"
-        />
-      </div>
+      <KpiGrid items={kpiItems} />
+
 
       {/* 2. Grafico a ciambella & Filtro colture */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
@@ -181,73 +188,33 @@ export default function Dashboard() {
 
       {/* 3. Grafici nutrienti NPK */}
       <div className="mb-8">
-        <div className="p-6 rounded-2xl shadow-md border border-gray-100 bg-white">
-          <div className="mb-6">
-            <h2 className="text-xl font-bold text-gray-800">
-              Analisi dei Nutrienti
-            </h2>
-            <p className="text-sm text-gray-500">
-              Confronto dei livelli medi di Azoto (N), Fosforo (P) e Potassio
-              (K) per ogni coltura
-            </p>
-          </div>
+        <ChartCard
+          title="Analisi dei Nutrienti"
+          subtitle="Confronto dei livelli medi di Azoto (N), Fosforo (P) e Potassio (K) per ogni coltura"
+        >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-t pt-6 border-gray-100">
-            <MetricBarChart
-              data={filteredAvgData}
-              dataKey="avgN"
-              label="Azoto (N)"
-              color={CUSTOM_COLORS.N}
-            />
-            <MetricBarChart
-              data={filteredAvgData}
-              dataKey="avgP"
-              label="Fosforo (P)"
-              color={CUSTOM_COLORS.P}
-            />
-            <MetricBarChart
-              data={filteredAvgData}
-              dataKey="avgK"
-              label="Potassio (K)"
-              color={CUSTOM_COLORS.K}
-            />
+            <MetricBarChart data={filteredAvgData} dataKey="avgN" label="Azoto (N)" color={CUSTOM_COLORS.N} />
+            <MetricBarChart data={filteredAvgData} dataKey="avgP" label="Fosforo (P)" color={CUSTOM_COLORS.P} />
+            <MetricBarChart data={filteredAvgData} dataKey="avgK" label="Potassio (K)" color={CUSTOM_COLORS.K} />
           </div>
-        </div>
+        </ChartCard>
       </div>
+
 
       {/* 4. Grafici parametri ambientali */}
       <div className="mb-8">
-        <div className="p-6 rounded-2xl shadow-md border border-gray-100 bg-white">
-          <div className="mb-6">
-            <h2 className="text-xl font-bold text-gray-800">
-              Analisi dei Parametri Ambientali
-            </h2>
-            <p className="text-sm text-gray-500">
-              Confronto dei livelli medi di Temperatura, pH e Pioggia per ogni
-              coltura
-            </p>
-          </div>
+        <ChartCard
+          title="Analisi dei Parametri Ambientali"
+          subtitle="Confronto dei livelli medi di Temperatura, pH e Pioggia per ogni coltura"
+        >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-t pt-6 border-gray-100">
-            <MetricBarChart
-              data={filteredAvgData}
-              dataKey="avgTemp"
-              label="Temperatura (°C)"
-              color={CUSTOM_COLORS.Temp}
-            />
-            <MetricBarChart
-              data={filteredAvgData}
-              dataKey="avgPH"
-              label="pH (%)"
-              color={CUSTOM_COLORS.PH}
-            />
-            <MetricBarChart
-              data={filteredAvgData}
-              dataKey="avgRain"
-              label="Pioggia (mm)"
-              color={CUSTOM_COLORS.Rain}
-            />
+            <MetricBarChart data={filteredAvgData} dataKey="avgTemp" label="Temperatura (°C)" color={CUSTOM_COLORS.Temp} />
+            <MetricBarChart data={filteredAvgData} dataKey="avgPH" label="pH (%)" color={CUSTOM_COLORS.PH} />
+            <MetricBarChart data={filteredAvgData} dataKey="avgRain" label="Pioggia (mm)" color={CUSTOM_COLORS.Rain} />
           </div>
-        </div>
+        </ChartCard>
       </div>
+
     </>
   );
 }

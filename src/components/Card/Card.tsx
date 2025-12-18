@@ -1,4 +1,5 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
+
 
 type CardProps = {
   title: string;
