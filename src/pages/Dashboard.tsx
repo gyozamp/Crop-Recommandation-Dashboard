@@ -1,10 +1,17 @@
 import React, { useState, useMemo } from "react";
 
+// import components/Filter
 import FilterSelect from "../components/FilterSelect/FilterSelect";
+import FilterPanel from "../components/FilterSelect/FilterPanel";
 
-//import Card from "../components/Card/Card";
+
+//import components/Card
 import ChartCard from "../components/Chart/ChartCard";
 import KpiGrid from "../components/Card/KpiGrid";
+
+//import components/Feedback
+import LoadingIndicator from "../components/Feedback/LoadingIndicator";
+import EmptyState from "../components/Feedback/EmptyState";
 
 
 // Chart.js e componenti di Chart.js
@@ -124,6 +131,9 @@ export default function Dashboard() {
     },
   ];
 
+  const isLoading = pieData.length === 0 && allSamples.length === 0;
+  const hasData = pieData.length > 0;
+
   return (
     <>
       {/* 1. KPI Cards */}
@@ -143,13 +153,14 @@ export default function Dashboard() {
             </p>
           </div>
           <div className="h-[300px] w-full relative flex justify-center">
-            {pieData.length > 0 ? (
+            {isLoading ? (
+              <LoadingIndicator text="Caricamento dati..." className="h-full" />
+            ) : hasData ? (
               <Doughnut data={doughnutData} options={doughnutOptions} />
             ) : (
-              <div className="flex items-center justify-center text-gray-400 text-sm h-full">
-                Caricamento dati...
-              </div>
+              <EmptyState message="Nessun dato disponibile per il grafico." />
             )}
+
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
               <span className="text-4xl font-extrabold text-gray-800 leading-none">
                 {totalCrops}
@@ -159,14 +170,12 @@ export default function Dashboard() {
               </span>
             </div>
           </div>
+
         </div>
 
         {/* B. Filtri */}
         <div className="flex flex-col gap-6">
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-full">
-            <h3 className="text-lg font-bold text-gray-800 mb-6">
-              Filtri Dati
-            </h3>
+          <FilterPanel title="Filtri Dati">
             <FilterSelect
               label="Seleziona Coltura"
               options={crops}
@@ -174,16 +183,16 @@ export default function Dashboard() {
               onChange={setSelectedCrop}
               placeholder="Tutte le colture"
             />
+            {/* Info Dataset come contenuto extra */}
             <div className="mt-8 p-4 bg-indigo-50 rounded-xl border border-indigo-100">
-              <h4 className="font-semibold text-indigo-900 mb-1 text-sm">
-                Info Dataset
-              </h4>
+              <h4 className="font-semibold text-indigo-900 mb-1 text-sm">Info Dataset</h4>
               <p className="text-xs text-indigo-700 leading-relaxed">
                 Dataset caricato: {allSamples.length} record processati.
               </p>
             </div>
-          </div>
+          </FilterPanel>
         </div>
+
       </div>
 
       {/* 3. Grafici nutrienti NPK */}

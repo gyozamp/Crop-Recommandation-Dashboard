@@ -1,9 +1,8 @@
-// src/components/Chart/MetricBarChart.tsx
-
 import React, { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
 import type { AvgDataEntry } from "../../hooks/useDashboardData";
 import { getBaseBarOptions } from "../../constants/chartConfig";
+import LoadingIndicator from "../Feedback/LoadingIndicator"; // Regola il percorso se la cartella è diversa
 
 type MetricBarChartProps = {
   /** Array di dati aggregati per tutte le colture */
@@ -61,9 +60,10 @@ export default function MetricBarChart({
         {data.length > 0 && labels.length > 0 ? (
           <Bar data={chartData} options={options} />
         ) : (
-          <div className="flex items-center justify-center h-full text-gray-400 text-sm">
-            Caricamento {label}...
-          </div>
+          <LoadingIndicator
+            text={`Caricamento ${label}...`}
+            className="h-full"
+          />
         )}
       </div>
     </div>
