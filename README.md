@@ -1,5 +1,5 @@
 # 🌱 - Crop Recommandion Dashboard
-Questo progetto è una **dashboard interattiva** sviluppata in **React** per esplorare e visualizzare i dati del **[Crop Recommendation Dataset]**(https://www.kaggle.com/datasets/atharvaingle/crop-recommendation-dataset), un dataset proveniente da Kaggle utilizzato per analizzare le caratteristiche del suolo e identificare la coltura più adatta in base ai parametri ambientali.
+Questo progetto è una **dashboard interattiva** sviluppata in **React** per esplorare e visualizzare i dati del **[Crop Recommendation Dataset](https://www.kaggle.com/datasets/atharvaingle/crop-recommendation-dataset)**, un dataset proveniente da Kaggle utilizzato per analizzare le caratteristiche del suolo e identificare la coltura più adatta in base ai parametri ambientali.
 
 L’obiettivo della dashboard è fornire uno strumento semplice, pulito e intuitivo per:
 - Analizzare le variabili agronomiche (N, P, K, pH, temperatura, umidità, pioggia);
