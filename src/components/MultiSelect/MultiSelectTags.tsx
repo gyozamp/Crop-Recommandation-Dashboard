@@ -1,16 +1,9 @@
-//import React from "react";
-
 type MultiSelectTagsProps = {
   options: string[];
-  /** Lista degli elementi attualmente selezionati */
   selected: string[];
-  /** Funzione chiamata quando si clicca su un tag per selezionarlo/deselezionarlo */
   onToggle: (value: string) => void;
-  /** Funzione chiamata per azzerare la selezione (es. pulsante "Tutte") */
   onClear: () => void;
-  /** Funzione che restituisce il colore da assegnare a ciascun tag */
-  getColor: (label: string, allLabels: string[]) => string;
-  /** Classi CSS aggiuntive (opzionale) per personalizzare contenitore/tags */
+  getColor?: (label: string, labels: string[]) => string;
   className?: string;
 };
 
@@ -34,11 +27,10 @@ export default function MultiSelectTags({
       {/* Pulsante "Tutte" */}
       <button
         onClick={onClear}
-        className={`px-3 py-1 text-xs rounded-full font-semibold transition-colors ${
-          selected.length === 0
+        className={`px-3 py-1 text-xs rounded-full font-semibold transition-colors ${selected.length === 0
             ? "bg-indigo-600 text-white shadow-md"
             : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-        }`}
+          }`}
       >
         Tutte
       </button>
@@ -46,7 +38,10 @@ export default function MultiSelectTags({
       {/* Tag per ogni opzione */}
       {options.map((option) => {
         const isSelected = selected.includes(option);
-        const color = getColor(option, options);
+        const color = getColor
+          ? getColor(option, options)
+          : "#6366f1"; // fallback indigo
+
         return (
           <button
             key={option}

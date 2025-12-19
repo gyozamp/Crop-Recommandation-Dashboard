@@ -139,7 +139,6 @@ export default function Dashboard() {
       {/* 1. KPI Cards */}
       <KpiGrid items={kpiItems} />
 
-
       {/* 2. Grafico a ciambella & Filtro colture */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
         {/* A. Grafico a ciambella */}

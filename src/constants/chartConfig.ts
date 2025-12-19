@@ -1,9 +1,3 @@
-// src/constants/chartConfig.ts
-
-/**
- * Tavolozza di colori predefinita utilizzata per il grafico a torta (doughnut).
- * Puoi espandere o modificare questi valori a seconda delle necessità.
- */
 export const CHART_COLORS: string[] = [
   "#6366f1",
   "#10b981",
@@ -15,10 +9,6 @@ export const CHART_COLORS: string[] = [
   "#84cc16",
 ];
 
-/**
- * Colori personalizzati per i grafici a barre delle diverse metriche.
- * Le chiavi devono corrispondere ai campi presenti nei tuoi dati aggregati.
- */
 export const CUSTOM_COLORS: Record<string, string> = {
   N: "#60a5fa",    // blue-400
   P: "#f87171",    // red-400
@@ -28,11 +18,6 @@ export const CUSTOM_COLORS: Record<string, string> = {
   Rain: "#22d3ee", // cyan-400
 };
 
-/**
- * Funzione che restituisce le opzioni di configurazione di base per i bar chart.
- * Può essere richiamata ogni volta che servi un grafico a barre, in modo da
- * ottenere sempre un nuovo oggetto opzioni (evitando condivisioni indesiderate).
- */
 export function getBaseBarOptions() {
   return {
     responsive: true,
@@ -65,3 +50,7 @@ export function getBaseBarOptions() {
     },
   };
 }
+
+
+
+
