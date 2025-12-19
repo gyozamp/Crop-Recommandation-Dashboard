@@ -41,7 +41,7 @@ src/
      npm install
    ```
 
-3. **Stard dev**
+3. **Start dev**
    ```text
      npm run dev
    ```
