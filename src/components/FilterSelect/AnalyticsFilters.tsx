@@ -23,12 +23,15 @@ export default function AnalyticsFilters({
   selectedCrops,
   onToggleCrop,
   onClearCrops,
+
   tempRange,
   onTempChange,
+
   phRange,
-  //onPhChange,
+  onPhChange,
+
   humidityRange,
-  //onHumidityChange,
+  onHumidityChange,
 }: AnalyticsFiltersProps) {
   return (
     <FilterPanel
@@ -68,7 +71,7 @@ export default function AnalyticsFilters({
         <RangeSlider
           label="Livello pH"
           value={phRange}
-          onChange={(v) => Array.isArray(v) && onTempChange(v)}
+          onChange={(v) => Array.isArray(v) && onPhChange(v)}
           min={0}
           max={15}
           step={0.1}
@@ -77,7 +80,7 @@ export default function AnalyticsFilters({
         <RangeSlider
           label="Umidità"
           value={humidityRange}
-          onChange={(v) => Array.isArray(v) && onTempChange(v)}
+          onChange={(v) => Array.isArray(v) && onHumidityChange(v)}
           min={0}
           max={100}
           step={1}

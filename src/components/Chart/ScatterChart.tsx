@@ -27,7 +27,7 @@ export default function ScatterChart({
   isLoading,
   height = 650,
 }: ScatterChartProps) {
-
+  // --- DATA ---
   const scatterData: ChartData<"scatter", ScatterPoint[]> = useMemo(() => {
     if (!samples.length) {
       return { datasets: [] };
@@ -65,17 +65,22 @@ export default function ScatterChart({
       });
     });
 
-    return { datasets: Object.values(grouped) };
+    return {
+      datasets: Object.values(grouped),
+    };
   }, [samples, cropLabels]);
 
+  // --- OPTIONS ---
   const scatterOptions: ChartOptions<"scatter"> = useMemo(
     () => ({
       responsive: true,
       maintainAspectRatio: false,
+
       interaction: {
         mode: "nearest",
         intersect: false,
       },
+
       plugins: {
         legend: {
           position: "bottom",
@@ -85,20 +90,39 @@ export default function ScatterChart({
             color: "#4b5563",
           },
         },
+
         title: {
           display: true,
-          text: `Punti visibili: ${samples.length}`,
+
+          // ✅ CONTEGGIO CORRETTO DEI PUNTI VISIBILI
+          text: (ctx) => {
+            const chart = ctx.chart;
+
+            const visiblePoints = chart.data.datasets.reduce(
+              (sum, dataset, index) => {
+                const meta = chart.getDatasetMeta(index);
+                if (meta.hidden) return sum;
+                return sum + (dataset.data?.length ?? 0);
+              },
+              0
+            );
+
+            return `Punti visibili: ${visiblePoints}`;
+          },
+
           font: { size: 16, weight: "bold" },
           color: "#4b5563",
           align: "start",
           padding: { bottom: 20 },
         },
+
         tooltip: {
           mode: "nearest",
           intersect: false,
           callbacks: {
             label: (ctx) => {
               const raw = ctx.raw as ScatterPoint;
+
               return `${raw.crop} — Temp: ${raw.x.toFixed(
                 1
               )}°C • Umidità: ${raw.y.toFixed(1)}% • pH: ${raw.ph.toFixed(2)}`;
@@ -106,6 +130,7 @@ export default function ScatterChart({
           },
         },
       },
+
       scales: {
         x: {
           type: "linear",
@@ -129,9 +154,10 @@ export default function ScatterChart({
         },
       },
     }),
-    [samples.length]
+    []
   );
 
+  // --- RENDER ---
   return (
     <div style={{ height, width: "100%" }}>
       {isLoading ? (
