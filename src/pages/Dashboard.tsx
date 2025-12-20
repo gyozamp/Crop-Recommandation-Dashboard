@@ -1,4 +1,4 @@
-//import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 
 // import components/Filter
 //import FilterSelect from "../components/FilterSelect/FilterSelect";
@@ -40,6 +40,8 @@ import {
 import useDashboardData from "../hooks/useDashboardData";
 import MetricBarChart from "../components/Chart/MetricBarChart";
 import { CHART_COLORS, CUSTOM_COLORS } from "../constants/chartConfig";
+
+import { getDatasetStats } from "../utils/datasetStats";
 
 // Registriamo i componenti Chart.js necessari
 ChartJS.register(
@@ -134,6 +136,100 @@ export default function Dashboard() {
   const isLoading = pieData.length === 0 && allSamples.length === 0;
   const hasData = pieData.length > 0;
 
+  const datasetStats = useMemo(() => {
+    if (!allSamples.length) return null;
+    return getDatasetStats(allSamples);
+  }, [allSamples]);
+
+  const statsRows = datasetStats
+    ? [
+      {
+        label: "Azoto (N)",
+        color: "emerald",
+        min: {
+          value: datasetStats.N.min.value,
+          label: datasetStats.N.min.label,
+        },
+        max: {
+          value: datasetStats.N.max.value,
+          label: datasetStats.N.max.label,
+        },
+      },
+      {
+        label: "Fosforo (P)",
+        color: "indigo",
+        min: {
+          value: datasetStats.P.min.value,
+          label: datasetStats.P.min.label,
+        },
+        max: {
+          value: datasetStats.P.max.value,
+          label: datasetStats.P.max.label,
+        },
+      },
+      {
+        label: "Potassio (K)",
+        color: "orange",
+        min: {
+          value: datasetStats.K.min.value,
+          label: datasetStats.K.min.label,
+        },
+        max: {
+          value: datasetStats.K.max.value,
+          label: datasetStats.K.max.label,
+        },
+      },
+      {
+        label: "Temperatura (°C)",
+        color: "red",
+        min: {
+          value: datasetStats.temperature.min.value.toFixed(1),
+          label: datasetStats.temperature.min.label,
+        },
+        max: {
+          value: datasetStats.temperature.max.value.toFixed(1),
+          label: datasetStats.temperature.max.label,
+        },
+      },
+      {
+        label: "Umidità (%)",
+        color: "blue",
+        min: {
+          value: datasetStats.humidity.min.value,
+          label: datasetStats.humidity.min.label,
+        },
+        max: {
+          value: datasetStats.humidity.max.value,
+          label: datasetStats.humidity.max.label,
+        },
+      },
+      {
+        label: "pH",
+        color: "purple",
+        min: {
+          value: datasetStats.ph.min.value.toFixed(2),
+          label: datasetStats.ph.min.label,
+        },
+        max: {
+          value: datasetStats.ph.max.value.toFixed(2),
+          label: datasetStats.ph.max.label,
+        },
+      },
+      {
+        label: "Pioggia (mm)",
+        color: "cyan",
+        min: {
+          value: datasetStats.rainfall.min.value,
+          label: datasetStats.rainfall.min.label,
+        },
+        max: {
+          value: datasetStats.rainfall.max.value,
+          label: datasetStats.rainfall.max.label,
+        },
+      },
+    ]
+    : [];
+
   return (
     <>
       {/* 1. KPI Cards */}
@@ -196,6 +292,34 @@ export default function Dashboard() {
             </div>
 
           )}
+        </div>
+
+        <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-5">
+          <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide">
+            Statistiche Dataset
+          </h3>
+
+          <div className="space-y-4">
+            {statsRows.map((item) => (
+              <div
+                key={item.label}
+                className="flex items-center justify-between rounded-xl border border-gray-100 p-4 bg-gray-50 hover:bg-gray-100 transition-colors"
+              >
+                <span className="text-sm font-semibold text-gray-800">
+                  {item.label}
+                </span>
+
+                <div className="flex items-center gap-3 text-xs">
+                  <span className={`px-2 py-1 rounded-full bg-${item.color}-50 text-${item.color}-700 font-medium`}>
+                    min {item.min.value} · {item.min.label}
+                  </span>
+                  <span className={`px-2 py-1 rounded-full bg-${item.color}-100 text-${item.color}-800 font-medium`}>
+                    max {item.max.value} · {item.max.label}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
 
