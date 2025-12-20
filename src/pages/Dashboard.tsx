@@ -142,7 +142,7 @@ export default function Dashboard() {
       {/* 2. Grafico a ciambella & Filtro colture */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
         {/* A. Grafico a ciambella */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 lg:col-span-2 flex flex-col items-center">
+        <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col">
           <div className="w-full mb-4 text-left">
             <h3 className="text-lg font-bold text-gray-800">
               Distribuzione Colture
@@ -151,7 +151,9 @@ export default function Dashboard() {
               Composizione del dataset per tipologia
             </p>
           </div>
-          <div className="h-[300px] w-full relative flex justify-center">
+
+          {/* Doughnut */}
+          <div className="h-[280px] w-full relative flex justify-center gap-20">
             {isLoading ? (
               <LoadingIndicator text="Caricamento dati..." className="h-full" />
             ) : hasData ? (
@@ -160,8 +162,9 @@ export default function Dashboard() {
               <EmptyState message="Nessun dato disponibile per il grafico." />
             )}
 
+            {/* Totale centrale */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-4xl font-extrabold text-gray-800 leading-none">
+              <span className="text-3xl font-extrabold text-gray-800 leading-none">
                 {totalCrops}
               </span>
               <span className="text-xs text-gray-400 uppercase font-bold mt-1 tracking-wider">
@@ -169,7 +172,32 @@ export default function Dashboard() {
               </span>
             </div>
           </div>
+
+          {/* LEGENDA */}
+          {!isLoading && hasData && (
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <div className="grid grid-cols-3 gap-x-6 gap-y-2 text-xs">
+                {pieData.map((item, index) => (
+                  <div
+                    key={item.label}
+                    className="flex items-center gap-2 text-gray-700"
+                  >
+                    <span
+                      className="h-2.5 w-2.5 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: CHART_COLORS[index] }}
+                    />
+                    <span className="font-medium truncate">{item.label}</span>
+                    <span className="text-gray-400 ml-auto">
+                      {item.count}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          )}
         </div>
+
 
         {/* B. Filtri */}
         <div className="flex flex-col gap-6">
@@ -196,14 +224,14 @@ export default function Dashboard() {
 
               {/* Feature */}
               <div className="p-5 bg-white rounded-xl border border-gray-200 space-y-4">
-                <h4 className="text-sm font-semibold text-gray-800">
+                {/* <h4 className="text-sm font-semibold text-gray-800">
                   Feature del Dataset
-                </h4>
+                </h4> */}
 
                 {/* Feature numeriche */}
                 <div>
                   <p className="text-xs font-semibold text-gray-500 uppercase mb-2">
-                    Variabili numeriche
+                    Feature Dataset
                   </p>
                   <ul className="grid grid-cols-2 gap-2 text-xs text-gray-700">
                     <li className="flex items-center gap-2">
