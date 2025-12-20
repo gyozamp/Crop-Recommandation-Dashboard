@@ -21,6 +21,10 @@ import {
 import LoadingIndicator from "../components/Feedback/LoadingIndicator";
 import EmptyState from "../components/Feedback/EmptyState";
 
+import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+//import IconButton from "../components/Button/IconButton";
+
+
 export default function Dataset() {
   const [data, setData] = useState<CropSample[]>([]);
   const [loading, setLoading] = useState(true);
@@ -82,24 +86,38 @@ export default function Dataset() {
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 animate-fade-in">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">
-        Crop Recommendation Dataset
-      </h2>
+      <div className="flex items-center gap-4 mb-6">
+        {/* Titolo */}
+        <h1 className="text-2xl font-medium text-gray-500 whitespace-nowrap">
+          Crop Recommendation Dataset
+        </h1>
 
-      {/* Toolbar: Search and potentially other actions */}
-      <div className="flex items-center justify-between mb-6">
-        {/* Search Input */}
-        <div className="relative flex items-center w-full max-w-xs">
-          <MagnifyingGlassIcon className="absolute left-3 h-5 w-5 text-gray-400" />
+        {/* Search bar (centrale, flessibile) */}
+        <div className="relative flex-1 max-w-md mx-auto">
+          <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
           <input
             type="text"
             value={globalFilter ?? ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
             placeholder="Cerca in tutte le colonne..."
-            className="pl-10 pr-4 py-2 border border-gray-200 rounded-lg w-full focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 outline-none transition-all"
+            className="pl-10 pr-4 py-2 border border-gray-200 rounded-lg w-full
+                 focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500
+                 outline-none transition-all"
           />
         </div>
-        {/* Altri bottoni o filtri qui */}
+
+        {/* Download Dataset */}
+        <a href="/Crop_recommendation.csv" download className="inline-flex">
+          <button
+            type="button"
+            className="px-4 py-2 border border-gray-300 rounded-lg text-gray-600
+                 hover:bg-gray-50 hover:text-indigo-600
+                 transition-colors flex items-center gap-2 text-sm font-medium whitespace-nowrap"
+          >
+            <ArrowDownTrayIcon className="h-5 w-5" />
+            Download Dataset
+          </button>
+        </a>
       </div>
 
       <div className="overflow-x-auto relative rounded-lg border border-gray-200">
@@ -124,13 +142,12 @@ export default function Dataset() {
                         )}
                         {header.column.getCanSort() && (
                           <ChevronUpDownIcon
-                            className={`h-4 w-4 text-gray-300 group-hover:text-gray-500 transition-colors ${
-                              header.column.getIsSorted() === "asc"
-                                ? "text-indigo-500 rotate-180"
-                                : header.column.getIsSorted() === "desc"
+                            className={`h-4 w-4 text-gray-300 group-hover:text-gray-500 transition-colors ${header.column.getIsSorted() === "asc"
+                              ? "text-indigo-500 rotate-180"
+                              : header.column.getIsSorted() === "desc"
                                 ? "text-indigo-500"
                                 : ""
-                            }`}
+                              }`}
                           />
                         )}
                       </div>
