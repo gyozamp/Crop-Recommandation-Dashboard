@@ -14,14 +14,8 @@ export default function Footer() {
 
         {/* Right: Links */}
         <div className="flex gap-6 mt-4 md:mt-0 text-sm font-medium text-gray-500">
-          <a href="#" className="hover:text-indigo-600 transition-colors duration-200">
-            Privacy Policy
-          </a>
-          <a href="#" className="hover:text-indigo-600 transition-colors duration-200">
-            Terms of Service
-          </a>
           <a 
-            href="#" 
+            href="https://github.com/gyozamp/Crop-Recommandation-Dashboard" 
             className="flex items-center gap-1 hover:text-indigo-600 transition-colors duration-200"
           >
             <GlobeAltIcon className="h-4 w-4" />
