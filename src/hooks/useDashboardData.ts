@@ -1,4 +1,3 @@
-// src/hooks/useDashboardData.ts
 import { useEffect, useState, useMemo } from "react";
 import { getCropDistribution, getAveragesByCrop, getSamples } from "../services/dataService";
 import type { CropSample } from "../types/crop";
@@ -16,38 +15,27 @@ export type AvgDataEntry = {
 
 export type BaseAvgDataEntry = Omit<AvgDataEntry, "avgPH" | "avgRain">;
 
-/**
- * Hook personalizzato che centralizza:
- *  - il recupero dei dati dal servizio,
- *  - il calcolo dei dati medi (compresi pH e pioggia),
- *  - la derivazione delle metriche aggregate usate nei KPI e nei grafici.
- */
 export function useDashboardData() {
-  // Dati originari
   const [pieData, setPieData] = useState<Array<{ label: string; count: number }>>([]);
   const [baseAvgData, setBaseAvgData] = useState<BaseAvgDataEntry[]>([]);
   const [allSamples, setAllSamples] = useState<CropSample[]>([]);
 
-  // Recupero dati all’inizializzazione
   useEffect(() => {
     getCropDistribution().then(setPieData);
     getAveragesByCrop().then(setBaseAvgData);
     getSamples().then(setAllSamples);
   }, []);
 
-  // Calcolo dei dati medi completi (inclusi pH e pioggia)
   const avgData: AvgDataEntry[] = useMemo(
     () => calculateAvgData(baseAvgData, allSamples),
     [baseAvgData, allSamples]
   );
 
-  // Elenco delle colture uniche (usato nei filtri)
   const crops: string[] = useMemo(
     () => Array.from(new Set(allSamples.map((s) => s.label))),
     [allSamples]
   );
 
-  // KPI derivati
   const totalCrops: number = useMemo(
     () => pieData.reduce((sum, d) => sum + d.count, 0),
     [pieData]
@@ -73,13 +61,11 @@ export function useDashboardData() {
   }, [avgData]);
 
   return {
-    // dati grezzi e aggregati
     pieData,
     avgData,
     crops,
     allSamples,
 
-    // metriche per i KPI
     totalCrops,
     uniqueCrops,
     avgTemperature,
