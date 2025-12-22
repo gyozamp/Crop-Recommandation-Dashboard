@@ -2,17 +2,13 @@ import { useMemo } from "react";
 
 import FilterPanel from "../components/FilterSelect/FilterPanel";
 
-
-//import components/Card
 import ChartCard from "../components/Chart/ChartCard";
-import KpiGrid from "../components/Card/KpiGrid";
 
-//import components/Feedback
 import LoadingIndicator from "../components/Feedback/LoadingIndicator";
 import EmptyState from "../components/Feedback/EmptyState";
 
+import DashboardKpis from "../components/Dashboard/DashboardKpis";
 
-// Chart.js e componenti di Chart.js
 import {
   Chart as ChartJS,
   ArcElement,
@@ -25,23 +21,12 @@ import {
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
-// Icone
-import {
-  CircleStackIcon,
-  TagIcon,
-  SunIcon,
-  BeakerIcon,
-  CloudIcon,
-} from "@heroicons/react/24/solid";
-
-// Hook e componenti personalizzati
 import useDashboardData from "../hooks/useDashboardData";
 import MetricBarChart from "../components/Chart/MetricBarChart";
 import { CHART_COLORS, CUSTOM_COLORS } from "../constants/chartConfig";
 
 import { getDatasetStats } from "../utils/datasetStats";
 
-// Registriamo i componenti Chart.js necessari
 ChartJS.register(
   ArcElement,
   Tooltip,
@@ -53,11 +38,10 @@ ChartJS.register(
 );
 
 export default function Dashboard() {
-  // Recuperiamo dati e metriche tramite l’hook personalizzato
+
   const {
     pieData,
     avgData,
-    //crops,
     totalCrops,
     uniqueCrops,
     avgTemperature,
@@ -66,7 +50,6 @@ export default function Dashboard() {
     allSamples,
   } = useDashboardData();
 
-  // Preparazione dei dati per il grafico a ciambella
   const doughnutData = {
     labels: pieData.map((d) => d.label),
     datasets: [
@@ -84,40 +67,6 @@ export default function Dashboard() {
     cutout: "80%",
     plugins: { legend: { display: false } },
   };
-
-  // Qui definiamo le KPI da passare al componente KpiGrid
-  const kpiItems = [
-    {
-      title: "Campioni totali",
-      value: totalCrops,
-      icon: <CircleStackIcon />,
-      color: "emerald" as const,
-    },
-    {
-      title: "Colture uniche",
-      value: uniqueCrops,
-      icon: <TagIcon />,
-      color: "indigo" as const,
-    },
-    {
-      title: "Temp. media (°C)",
-      value: avgTemperature,
-      icon: <SunIcon />,
-      color: "orange" as const,
-    },
-    {
-      title: "pH medio",
-      value: avgPH,
-      icon: <BeakerIcon />,
-      color: "purple" as const,
-    },
-    {
-      title: "Pioggia media (mm)",
-      value: avgRain,
-      icon: <CloudIcon />,
-      color: "blue" as const,
-    },
-  ];
 
   const isLoading = pieData.length === 0 && allSamples.length === 0;
   const hasData = pieData.length > 0;
@@ -253,7 +202,14 @@ export default function Dashboard() {
   return (
     <>
       {/* 1. KPI Cards */}
-      <KpiGrid items={kpiItems} />
+      <DashboardKpis
+        totalCrops={totalCrops}
+        uniqueCrops={uniqueCrops}
+        avgTemperature={avgTemperature}
+        avgPH={avgPH}
+        avgRain={avgRain}
+      />
+
 
       {/* 2. Grafico a ciambella & Filtro colture */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 auto-rows-fr">

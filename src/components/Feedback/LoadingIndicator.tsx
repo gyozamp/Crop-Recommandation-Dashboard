@@ -1,4 +1,4 @@
-import React from "react";
+//import React from "react";
 
 type LoadingIndicatorProps = {
   /** Messaggio opzionale da mostrare accanto allo spinner */
