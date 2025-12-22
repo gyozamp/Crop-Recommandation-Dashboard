@@ -216,6 +216,40 @@ export default function Dashboard() {
     ]
     : [];
 
+  type BadgeColor = "emerald" | "indigo" | "orange" | "red" | "blue" | "purple" | "cyan";
+
+  const BADGE_COLORS: Record<BadgeColor, { min: string; max: string }> = {
+    emerald: {
+      min: "px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 font-medium",
+      max: "px-2 py-1 rounded-full bg-emerald-100 text-emerald-800 font-medium",
+    },
+    indigo: {
+      min: "px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 font-medium",
+      max: "px-2 py-1 rounded-full bg-indigo-100 text-indigo-800 font-medium",
+    },
+    orange: {
+      min: "px-2 py-1 rounded-full bg-orange-50 text-orange-700 font-medium",
+      max: "px-2 py-1 rounded-full bg-orange-100 text-orange-800 font-medium",
+    },
+    red: {
+      min: "px-2 py-1 rounded-full bg-red-50 text-red-700 font-medium",
+      max: "px-2 py-1 rounded-full bg-red-100 text-red-800 font-medium",
+    },
+    blue: {
+      min: "px-2 py-1 rounded-full bg-blue-50 text-blue-700 font-medium",
+      max: "px-2 py-1 rounded-full bg-blue-100 text-blue-800 font-medium",
+    },
+    purple: {
+      min: "px-2 py-1 rounded-full bg-purple-50 text-purple-700 font-medium",
+      max: "px-2 py-1 rounded-full bg-purple-100 text-purple-800 font-medium",
+    },
+    cyan: {
+      min: "px-2 py-1 rounded-full bg-cyan-50 text-cyan-700 font-medium",
+      max: "px-2 py-1 rounded-full bg-cyan-100 text-cyan-800 font-medium",
+    },
+  };
+
+
   return (
     <>
       {/* 1. KPI Cards */}
@@ -306,10 +340,10 @@ export default function Dashboard() {
                 </span>
 
                 <div className="flex items-center gap-3 text-xs">
-                  <span className={`px-2 py-1 rounded-full bg-${item.color}-50 text-${item.color}-700 font-medium`}>
+                  <span className={BADGE_COLORS[item.color].min}>
                     min {item.min.value} · {item.min.label}
                   </span>
-                  <span className={`px-2 py-1 rounded-full bg-${item.color}-100 text-${item.color}-800 font-medium`}>
+                  <span className={BADGE_COLORS[item.color].max}>
                     max {item.max.value} · {item.max.label}
                   </span>
                 </div>
@@ -317,6 +351,7 @@ export default function Dashboard() {
             ))}
           </div>
         </div>
+
         {/* B. Filtri */}
         <div className="flex flex-col h-full">
           <FilterPanel title="Informazioni sul Dataset" subtitle="Dettagli e caratteristiche principali del dataset utilizzato" className="flex flex-col h-full">
