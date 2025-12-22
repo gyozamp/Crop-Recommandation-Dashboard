@@ -52,3 +52,8 @@ Go back to the root folder and run the following command:
      npm run dev
    ```
 
+# Future Development
+- Motore di raccomandazione “what-if”: aggiungere un backend leggero (es. API in Node/Express o FastAPI) che esegua un modello di classificazione addestrato sul dataset Kaggle per suggerire la coltura ideale dati N, P, K, temperatura, umidità, pH e pioggia; integrare una pagina/form di input e visualizzare la probabilità per le prime colture consigliate;
+- Pipeline dati e aggiornabilità: sostituire il JSON statico con un endpoint REST/GraphQL o storage (S3/DB) per caricare dataset aggiornati, con job ETL che validano e normalizzano i campi; prevedere una funzione di upload protetta e versionamento dei dataset;
+- Nuove visualizzazioni analitiche: attivare e ampliare il grafico a barre orizzontali per confrontare metriche medie per coltura e aggiungere heatmap di correlazione N/P/K vs resa, plus trend lines per intervalli di temperatura/umidità;
+- Personalizzazione e collaborazione: introdurre autenticazione, preferiti/salvataggi di viste (filtri + layout grafici), note condivise e link condivisibili verso uno stato specifico della dashboard.
