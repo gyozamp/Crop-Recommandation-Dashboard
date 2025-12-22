@@ -3,6 +3,7 @@ import type { CropSample } from "../../types/crop";
 import { getDatasetStats } from "../../utils/datasetStats";
 import { BADGE_COLORS } from "../../constants/badges";
 import type { BadgeColor } from "../../constants/badges";
+//import FilterPanel from "../../components/FilterSelect/FilterPanel";
 
 type StatRow = {
   label: string;

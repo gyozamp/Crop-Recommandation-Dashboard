@@ -2,6 +2,7 @@ import { Doughnut } from "react-chartjs-2";
 import LoadingIndicator from "../../components/Feedback/LoadingIndicator";
 import EmptyState from "../../components/Feedback/EmptyState";
 import { CHART_COLORS } from "../../constants/chartConfig";
+import FilterPanel from "../../components/FilterSelect/FilterPanel";
 
 type PieItem = {
   label: string;
@@ -45,16 +46,11 @@ export default function CropDistributionCard({
   return (
     <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col">
       {/* HEADER */}
-      <div className="mb-4">
-        <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide">
-          Distribuzione Colture
-        </h3>
-        <p className="text-sm text-gray-500">
-          Composizione del dataset per tipologia
-        </p>
-      </div>
-
-      {/* BODY */}
+      <FilterPanel
+            title="Informazioni sul Dataset"
+            subtitle="Dettagli e caratteristiche principali del dataset utilizzato"
+            className="flex flex-col h-full"
+      >
       <div className="flex flex-col flex-1">
         <div className="relative flex justify-center">
           <div className="relative h-[260px] w-[260px]">
@@ -103,6 +99,8 @@ export default function CropDistributionCard({
           </div>
         )}
       </div>
+
+      </FilterPanel>
     </div>
   );
 }
