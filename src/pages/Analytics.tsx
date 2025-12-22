@@ -6,13 +6,13 @@ import AnalyticsFilters from "../components/FilterSelect/AnalyticsFilters";
 
 // Charts
 import ScatterChart from "../components/Chart/ScatterChart";
-import HorizontalBarChart from "../components/Chart/HorizontalBarChart";
+//import HorizontalBarChart from "../components/Chart/HorizontalBarChart";
 
 export default function Analytics() {
   const {
     // dati
     filteredSamples,
-    aggregatedAverages,
+    //aggregatedAverages,
     cropLabels,
 
     // filtri colture
@@ -29,18 +29,16 @@ export default function Analytics() {
     setHumidityRange,
 
     // metric selector
-    selectedMetric,
-    setSelectedMetric,
+    //selectedMetric,
+    //setSelectedMetric,
 
     // stato
     isLoading,
   } = useAnalyticsData();
 
   return (
-    <div className="p-0">
+    <div className="h-full">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-
-
         {/* --- FILTRI --- */}
         <AnalyticsFilters
           cropLabels={cropLabels}
@@ -70,24 +68,28 @@ export default function Analytics() {
                 height={650}
               />
             </ChartCard>
-
-            {/* Horizontal Bar */}
-            <ChartCard
-              title="Confronto Medie per Coltura"
-              subtitle="Metriche ambientali medie per coltura selezionata"
-            >
-              <HorizontalBarChart
-                data={aggregatedAverages}
-                selectedMetric={selectedMetric}
-                onMetricChange={setSelectedMetric}
-                isLoading={isLoading}
-                height={500}
-              />
-            </ChartCard>
-            
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+
+
+
+
+
+{/* Horizontal Bar */ }
+// <ChartCard
+//   title="Confronto Medie per Coltura"
+//   subtitle="Metriche ambientali medie per coltura selezionata"
+// >
+//   <HorizontalBarChart
+//     data={aggregatedAverages}
+//     selectedMetric={selectedMetric}
+//     onMetricChange={setSelectedMetric}
+//     isLoading={isLoading}
+//     height={500}
+//   />
+// </ChartCard>

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 type FilterPanelProps = {
   title: string;
+  subtitle?: string;
   children: ReactNode;
   className?: string;
 };
@@ -12,15 +13,28 @@ type FilterPanelProps = {
  */
 export default function FilterPanel({
   title,
+  subtitle,
   children,
   className = "",
 }: FilterPanelProps) {
   return (
     <div
-      className={`bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-full ${className}`}
+      className={`bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col h-full ${className}`}
     >
-      <h3 className="text-lg font-bold text-gray-800 mb-6">{title}</h3>
-      {children}
+      {/* HEADER */}
+      <div className="mb-6">
+        <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide">
+          {title}
+        </h3>
+        {subtitle && (
+          <p className="text-sm text-gray-500 mt-1">{subtitle}</p>
+        )}
+      </div>
+
+      {/* BODY */}
+      <div className="flex flex-col flex-1">
+        {children}
+      </div>
     </div>
   );
 }

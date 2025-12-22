@@ -16,23 +16,23 @@ export default function ChartCard({
   return (
     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
       {(title || headerRight) && (
-        <div className="mb-4 pb-4 border-b border-gray-100">
+        <div className="pb-3 mb-4 border-b border-gray-100">
           <div className="flex items-start justify-between gap-4">
             {/* Title + Subtitle */}
-            <div className="flex flex-col gap-1">
+            <div>
               {title && (
-                <h2 className="text-xl font-bold text-gray-800 leading-tight">
+                <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide">
                   {title}
-                </h2>
+                </h3>
               )}
               {subtitle && (
-                <p className="text-sm text-gray-500 max-w-xl">
+                <p className="text-sm text-gray-500 mt-0.5">
                   {subtitle}
                 </p>
               )}
             </div>
 
-            {/* Right-side content (MetricSelector, buttons, ecc.) */}
+            {/* Right-side content */}
             {headerRight && (
               <div className="shrink-0">{headerRight}</div>
             )}

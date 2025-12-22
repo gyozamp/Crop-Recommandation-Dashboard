@@ -1,7 +1,5 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
-// import components/Filter
-//import FilterSelect from "../components/FilterSelect/FilterSelect";
 import FilterPanel from "../components/FilterSelect/FilterPanel";
 
 
@@ -55,9 +53,6 @@ ChartJS.register(
 );
 
 export default function Dashboard() {
-  // Selezione dell’eventuale coltura da filtrare
-  //const [selectedCrop, setSelectedCrop] = useState<string>("");
-
   // Recuperiamo dati e metriche tramite l’hook personalizzato
   const {
     pieData,
@@ -89,15 +84,6 @@ export default function Dashboard() {
     cutout: "80%",
     plugins: { legend: { display: false } },
   };
-
-  // Applichiamo il filtro per coltura, se impostato
-  // const filteredAvgData = useMemo(
-  //   () =>
-  //     selectedCrop
-  //       ? avgData.filter((d) => d.label === selectedCrop)
-  //       : avgData,
-  //   [avgData, selectedCrop]
-  // );
 
   // Qui definiamo le KPI da passare al componente KpiGrid
   const kpiItems = [
@@ -236,11 +222,11 @@ export default function Dashboard() {
       <KpiGrid items={kpiItems} />
 
       {/* 2. Grafico a ciambella & Filtro colture */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 auto-rows-fr">
         {/* A. Grafico a ciambella */}
         <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col">
           <div className="w-full mb-4 text-left">
-            <h3 className="text-lg font-bold text-gray-800">
+            <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide">
               Distribuzione Colture
             </h3>
             <p className="text-sm text-gray-500">
@@ -248,58 +234,68 @@ export default function Dashboard() {
             </p>
           </div>
 
-          {/* Doughnut */}
-          <div className="h-[280px] w-full relative flex justify-center gap-20">
-            {isLoading ? (
-              <LoadingIndicator text="Caricamento dati..." className="h-full" />
-            ) : hasData ? (
-              <Doughnut data={doughnutData} options={doughnutOptions} />
-            ) : (
-              <EmptyState message="Nessun dato disponibile per il grafico." />
-            )}
+          <div className="flex flex-col flex-1">
+            {/* Doughnut */}
+            <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col h-full">
 
-            {/* Totale centrale */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-3xl font-extrabold text-gray-800 leading-none">
-                {totalCrops}
-              </span>
-              <span className="text-xs text-gray-400 uppercase font-bold mt-1 tracking-wider">
-                Campioni
-              </span>
-            </div>
-          </div>
+              <div className="relative w-full flex justify-center">
+                <div className="relative h-[260px] w-[260px]">
+                  {isLoading ? (
+                    <LoadingIndicator text="Caricamento dati..." className="h-full" />
+                  ) : hasData ? (
+                    <Doughnut data={doughnutData} options={doughnutOptions} />
+                  ) : (
+                    <EmptyState message="Nessun dato disponibile per il grafico." />
+                  )}
 
-          {/* LEGENDA */}
-          {!isLoading && hasData && (
-            <div className="mt-4 pt-4 border-t border-gray-100">
-              <div className="grid grid-cols-3 gap-x-6 gap-y-2 text-xs">
-                {pieData.map((item, index) => (
-                  <div
-                    key={item.label}
-                    className="flex items-center gap-2 text-gray-700"
-                  >
-                    <span
-                      className="h-2.5 w-2.5 rounded-full flex-shrink-0"
-                      style={{ backgroundColor: CHART_COLORS[index] }}
-                    />
-                    <span className="font-medium truncate">{item.label}</span>
-                    <span className="text-gray-400 ml-auto">
-                      {item.count}
+                  {/* Totale centrale */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    <span className="text-3xl font-extrabold text-gray-800 leading-none">
+                      {totalCrops}
+                    </span>
+                    <span className="text-xs text-gray-400 uppercase font-bold mt-1 tracking-wider">
+                      Campioni
                     </span>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
 
-          )}
+            {/* LEGENDA */}
+            {!isLoading && hasData && (
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="grid grid-cols-3 gap-x-6 gap-y-2 text-xs">
+                  {pieData.map((item, index) => (
+                    <div
+                      key={item.label}
+                      className="flex items-center gap-2 text-gray-700"
+                    >
+                      <span
+                        className="h-2.5 w-2.5 rounded-full flex-shrink-0"
+                        style={{ backgroundColor: CHART_COLORS[index] }}
+                      />
+                      <span className="font-medium truncate">{item.label}</span>
+                      <span className="text-gray-400 ml-auto">{item.count}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-5">
-          <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide">
-            Statistiche Dataset
-          </h3>
+        {/* A. Statistiche Dataset */}
+        <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-5 h-full">
+          <div className="w-full mb-4 text-left">
+            <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide">
+              Statistiche Dataset
+            </h3>
+            <p className="text-sm text-gray-500">
+              Visualizzazione dei valori minimi e massimi per ogni feature
+            </p>
+          </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 flex-1 flex flex-col justify-between">
             {statsRows.map((item) => (
               <div
                 key={item.label}
@@ -321,13 +317,11 @@ export default function Dashboard() {
             ))}
           </div>
         </div>
-
-
         {/* B. Filtri */}
-        <div className="flex flex-col gap-6">
-          <FilterPanel title="Informazioni Dataset">
+        <div className="flex flex-col h-full">
+          <FilterPanel title="Informazioni sul Dataset" subtitle="Dettagli e caratteristiche principali del dataset utilizzato" className="flex flex-col h-full">
             {/* Info Dataset */}
-            <div className="space-y-6">
+            <div className="space-y-4 flex flex-col flex-1">
 
               {/* Riepilogo numerico */}
               <div className="grid grid-cols-2 gap-4">
@@ -348,10 +342,6 @@ export default function Dashboard() {
 
               {/* Feature */}
               <div className="p-5 bg-white rounded-xl border border-gray-200 space-y-4">
-                {/* <h4 className="text-sm font-semibold text-gray-800">
-                  Feature del Dataset
-                </h4> */}
-
                 {/* Feature numeriche */}
                 <div>
                   <p className="text-xs font-semibold text-gray-500 uppercase mb-2">
@@ -399,8 +389,6 @@ export default function Dashboard() {
                   </div>
                 </div>
               </div>
-
-
               {/* Nota descrittiva */}
               <div className="p-4 bg-indigo-50 rounded-xl border border-indigo-100">
                 <h4 className="font-semibold text-indigo-900 mb-1 text-sm">
@@ -413,11 +401,9 @@ export default function Dashboard() {
                   specifiche di suolo e clima.
                 </p>
               </div>
-
             </div>
           </FilterPanel>
         </div>
-
       </div>
 
       {/* 3. Grafici nutrienti NPK */}
